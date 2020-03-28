@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple DNN", "Simple DNN.csproj", "{FF673399-4018-4EDE-BCAE-C2B0EF19E7E2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple DNN Tests", "..\Simple DNN Tests\Simple DNN Tests.csproj", "{4884C9FB-271A-469C-B9B0-CD61BF9A99EA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Neural Network", "Neural Network", "{4DF9365F-2CB2-4433-A12C-53E19D26EED4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,17 @@ Global
 		{FF673399-4018-4EDE-BCAE-C2B0EF19E7E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF673399-4018-4EDE-BCAE-C2B0EF19E7E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF673399-4018-4EDE-BCAE-C2B0EF19E7E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4884C9FB-271A-469C-B9B0-CD61BF9A99EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4884C9FB-271A-469C-B9B0-CD61BF9A99EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4884C9FB-271A-469C-B9B0-CD61BF9A99EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4884C9FB-271A-469C-B9B0-CD61BF9A99EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FF673399-4018-4EDE-BCAE-C2B0EF19E7E2} = {4DF9365F-2CB2-4433-A12C-53E19D26EED4}
+		{4884C9FB-271A-469C-B9B0-CD61BF9A99EA} = {4DF9365F-2CB2-4433-A12C-53E19D26EED4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DC65BB40-B801-4E3F-BC4D-5008E153621D}
