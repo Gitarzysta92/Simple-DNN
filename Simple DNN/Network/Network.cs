@@ -1,12 +1,11 @@
-﻿using Simple_DNN.Neurons;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Simple_DNN
+namespace Simple_DNN.Network
 {
 
   public interface INetwork
@@ -15,15 +14,15 @@ namespace Simple_DNN
   }
 
 
-  public class Network<Neuron>
-  {
+  public class Network<Neuron> 
+  { 
     public int InputLayerLength { get; }
     public int OutputLayerLength { get; }
     public int LayersNumber { get; }
   
 
     // Neurons containers created from jagged array
-    private List<Neuron>[] network;
+    private ILayer[] network;
 
     private int inputLayerLength;
 
@@ -39,6 +38,14 @@ namespace Simple_DNN
       this.outputLayerLength = layersConfig[layersConfig.Length - 1];
       this.layersNumber = layersConfig.Length;
 
+
+      this.network = new ILayer[this.layersNumber];
+
+      foreach (ILayer layer in this.network){
+        layer.add
+      } 
+
+      
     }
 
     // iterate over all inputs elements

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Simple_DNN;
+using Simple_DNN.Network;
+using Simple_DNN.Neuron;
+using Moq;
 
 namespace Simple_DNN_Tests
 {
@@ -15,7 +17,8 @@ namespace Simple_DNN_Tests
       int excpectedIterations = layers.ToList().Sum();
       int iterations = 0;
 
-      Network network = new Network(layers);
+
+      Network<INeuron> network = new Network<INeuron>(layers);
 
       network.ForEach(neuron => iterations++);
 

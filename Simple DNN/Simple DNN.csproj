@@ -58,13 +58,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Network\Layer.cs" />
     <Compile Include="Network\Network.cs" />
     <Compile Include="Network\NetworkService.cs" />
+    <Compile Include="Network\Neuron.cs" />
     <Compile Include="NeuralNetwork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SygmoidNeuron\SygmoidNeuron.cs" />
-    <Compile Include="SygmoidNeuron\SygmoidNeuronFactory.cs" />
-    <Compile Include="SygmoidNeuron\SygmoidNeuronService.cs" />
+    <Compile Include="Neuron\SygmoidNeuron\ISygmoidNeuron.cs" />
+    <Compile Include="Neuron\SygmoidNeuron\SygmoidNeuron.cs" />
+    <Compile Include="Neuron\NeuronFactory.cs" />
+    <Compile Include="Neuron\NeuronService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

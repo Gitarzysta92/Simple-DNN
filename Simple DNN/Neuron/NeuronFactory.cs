@@ -4,28 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Simple_DNN.Neurons
+namespace Simple_DNN.Neuron
 {
-  interface ISygmoidNeuronFactory
+  interface INeuronFactory
   {
-    SygmoidNeuron Create(string id);
-    SygmoidNeuron Create(string id, float weight, int baias);
+    INeuron Create(string id);
+    INeuron Create(string id, float weight, int baias);
   }
 
 
-  class SygmoidNeuronFactory : ISygmoidNeuronFactory
+  class NeuronFactory : INeuronFactory
   {
 
     private readonly Random randomNumber;
 
-    public SygmoidNeuronFactory(Random random) 
+    public NeuronFactory(Random random) 
     {
       this.randomNumber = random;
     }
 
 
 
-    public SygmoidNeuron Create(string id)
+    public INeuron Create(string id)
     {
       float weight = (float) this.randomNumber.NextDouble();
       int baias = this.randomNumber.Next(10);
@@ -33,7 +33,7 @@ namespace Simple_DNN.Neurons
       return new SygmoidNeuron(id, weight, baias);
     }
 
-    public SygmoidNeuron Create(string id, float weight, int baias)
+    public INeuron Create(string id, float weight, int baias)
     {
       return new SygmoidNeuron(id, weight, baias);
     }

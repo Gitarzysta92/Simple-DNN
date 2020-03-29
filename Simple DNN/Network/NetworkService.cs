@@ -1,4 +1,4 @@
-﻿using Simple_DNN.Neurons;
+﻿using Simple_DNN.Neuron;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,42 +6,34 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Simple_DNN
+namespace Simple_DNN.Network
 {
-  interface Neuron
-  {
-    float[] Inputs { get; set; }
+ 
 
-    float Output { get; set; }
-
-    void Evaluate();
-
-  }
-
-  class NetworkService<T> where T : Neuron
+  class NetworkService
   {
 
-    private Network<T> network;
+    private Network<INeuron> network;
 
-    private readonly ISygmoidNeuronsService sygmoidNeuronsService;
+    private readonly INeuronService neuronService;
 
     public NetworkService(
-      ISygmoidNeuronsService sygmoidNeuronsService
+      INeuronService neuronsService
     )
     {
-      this.sygmoidNeuronsService = sygmoidNeuronsService;
+      this.neuronService = neuronsService;
     }
 
 
     public void InitializeNetwork(int[] layersConfig)
     {
 
-      this.network = new Network<T>(layersConfig);
+      this.network = new Network<INeuron>(layersConfig);
 
       this.network.ForEach((neuron, network, layerIndex, rowIndex) => 
       {
         string id = $"{layerIndex}{rowIndex}";
-        neuron = this.sygmoidNeuronsService.InitializeNeuron<T>(id);
+        neuron = this.neuronService.InitializeNeuron(id);
 
         var prevLayer = network[layerIndex - 1];
         if (prevLayer != null)

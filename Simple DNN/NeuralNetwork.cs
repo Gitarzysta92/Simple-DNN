@@ -1,4 +1,5 @@
-﻿using Simple_DNN.Neurons;
+﻿using Simple_DNN.Neuron;
+using Simple_DNN.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,10 @@ namespace Simple_DNN
     static void Main(string[] args)
     {
       var rand = new Random();
-      var sygmoidNeuronFactory = new SygmoidNeuronFactory(rand);
-      var sygmoidNeuronService = new SygmoidNeuronService(sygmoidNeuronFactory);
+      var sygmoidNeuronFactory = new NeuronFactory(rand);
+      var sygmoidNeuronService = new NeuronService(sygmoidNeuronFactory);
 
-      var networkService = new NetworkService<SygmoidNeuron>(sygmoidNeuronService);
+      var networkService = new NetworkService(sygmoidNeuronService);
 
       var layers = new[] {10, 10, 10};
 
