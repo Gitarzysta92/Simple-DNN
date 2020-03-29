@@ -15,7 +15,7 @@ namespace Simple_DNN
   }
 
 
-  public class Network : INetwork
+  public class Network<Neuron>
   {
     public int InputLayerLength { get; }
     public int OutputLayerLength { get; }
@@ -23,7 +23,7 @@ namespace Simple_DNN
   
 
     // Neurons containers created from jagged array
-    private List<Object>[] network;
+    private List<Neuron>[] network;
 
     private int inputLayerLength;
 
@@ -42,7 +42,7 @@ namespace Simple_DNN
     }
 
     // iterate over all inputs elements
-    public void Inputs(Action<Object, int> iterator)
+    public void Inputs(Action<Neuron, int> iterator)
     {
       ForEach((neuron, network, layerIndex, rowIndex) =>
       {
@@ -54,7 +54,7 @@ namespace Simple_DNN
     }
 
     // iterate over all outputs elements
-    public T[] Outputs<T>(Func<Object, T> iterator)
+    public T[] Outputs<T>(Func<Neuron, T> iterator)
     {
       T[] outputs = new T[this.outputLayerLength];
 
@@ -70,7 +70,7 @@ namespace Simple_DNN
     }
 
     // iterate over all neurons in the network
-    public void ForEach(Action<Object, List<Object>[], int, int> iterator)
+    public void ForEach(Action<Neuron, List<Neuron>[], int, int> iterator)
     {
       for (int layer = 0; layer < this.network.Length; layer++)
       {
@@ -79,7 +79,7 @@ namespace Simple_DNN
       }
     }
 
-    public void ForEach(Action<Object> iterator)
+    public void ForEach(Action<Neuron> iterator)
     {
       for (int layer = 0; layer < this.network.Length; layer++)
         this.network[layer].ForEach(neuron => iterator(neuron));

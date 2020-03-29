@@ -8,7 +8,7 @@ namespace Simple_DNN.Neurons
 {
   interface ISygmoidNeuronsService
   {
-    SygmoidNeuron InitializeNeuron(string id);
+    SygmoidNeuron InitializeNeuron<T>(string id);
   }
 
   class SygmoidNeuronService : ISygmoidNeuronsService
@@ -23,7 +23,7 @@ namespace Simple_DNN.Neurons
     }
    
 
-    public SygmoidNeuron InitializeNeuron(string id)
+    public SygmoidNeuron InitializeNeuron<T>(string id)
     {
       return this.sygmoidNeuronFactory.Create(id);
     }

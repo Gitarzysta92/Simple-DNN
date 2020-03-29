@@ -8,10 +8,20 @@ using System.Threading.Tasks;
 
 namespace Simple_DNN
 {
-  class NetworkService
+  interface Neuron
+  {
+    float[] Inputs { get; set; }
+
+    float Output { get; set; }
+
+    void Evaluate();
+
+  }
+
+  class NetworkService<T> where T : Neuron
   {
 
-    private INetwork network;
+    private Network<T> network;
 
     private readonly ISygmoidNeuronsService sygmoidNeuronsService;
 
@@ -23,15 +33,15 @@ namespace Simple_DNN
     }
 
 
-    public void InitializeNetwork(int[] layersConfig, neuron)
+    public void InitializeNetwork(int[] layersConfig)
     {
 
-      this.network = new Network(layersConfig);
+      this.network = new Network<T>(layersConfig);
 
       this.network.ForEach((neuron, network, layerIndex, rowIndex) => 
       {
         string id = $"{layerIndex}{rowIndex}";
-        neuron = this.sygmoidNeuronsService.InitializeNeuron(id);
+        neuron = this.sygmoidNeuronsService.InitializeNeuron<T>(id);
 
         var prevLayer = network[layerIndex - 1];
         if (prevLayer != null)
@@ -44,7 +54,7 @@ namespace Simple_DNN
 
     public void setInputData(float[] inputData)
     {
-      this.neuralNetwork.Inputs((neuron, index) => neuron.Inputs = new float[] { inputData[index] });
+      this.network.Inputs((neuron, index) => neuron.Inputs = new float[] { inputData[index] });
     }
 
 
@@ -52,17 +62,17 @@ namespace Simple_DNN
     public float[] Evaluate(float[] inputData)
     {
       
-     int numberOfLayers = this.neuralNetwork.LayersNumber;
-     int inputLayerLength = this.neuralNetwork.InputLayerLength;
+     int numberOfLayers = this.network.LayersNumber;
+     int inputLayerLength = this.network.InputLayerLength;
 
       if (inputData.Length != inputLayerLength)
         throw new Exception();
 
       
 
-      this.neuralNetwork.ForEach(neuron => neuron.Evaluate());
+      this.network.ForEach(neuron => neuron.Evaluate());
 
-      return this.neuralNetwork.Outputs<float>(neuron => neuron.Output);
+      return this.network.Outputs<float>(neuron => neuron.Output);
     }
 
   }
