@@ -14,7 +14,7 @@ namespace Simple_DNN.Network
   }
 
 
-  public class Network<Neuron> 
+  public class Network
   { 
     public int InputLayerLength { get; }
     public int OutputLayerLength { get; }
@@ -31,9 +31,17 @@ namespace Simple_DNN.Network
     private int layersNumber;
 
 
-    public Network(int[] layersConfig)
-    {
+    private ILayer layer;
 
+
+    public Network(ILayer layer)
+    {
+      this.layer = layer;
+
+    }
+
+    public void Initialize(int[] layersConfig)
+    {
       this.inputLayerLength = layersConfig[0];
       this.outputLayerLength = layersConfig[layersConfig.Length - 1];
       this.layersNumber = layersConfig.Length;
@@ -41,12 +49,12 @@ namespace Simple_DNN.Network
 
       this.network = new ILayer[this.layersNumber];
 
-      foreach (ILayer layer in this.network){
-        layer.add
-      } 
-
-      
+      for (int layer = 0; layer < this.network.Length; layer++)
+      {
+        this.network[layer] = new this.layer(layersConfig[layer]);
+      }
     }
+
 
     // iterate over all inputs elements
     public void Inputs(Action<Neuron, int> iterator)
