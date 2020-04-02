@@ -16,4 +16,39 @@ namespace Simple_DNN.Network
 
   }
 
+  public class Neuron : INeuron
+  {
+    public int Id { get; set; }
+
+
+    public float[] Inputs { get; set; }
+
+    public float Output { get; set; }
+
+    public Neuron(int id)
+    {
+      Id = id;
+    }
+    public void Evaluate() { }
+  }
+
+
+
+
+  public interface INeuronFactory
+  {
+    INeuron Create(int layerId, int neuronId);
+  }
+
+  public class NeuronFactory : INeuronFactory
+  {
+    public NeuronFactory() { }
+
+    public INeuron Create(int layerid, int neuronId)
+    {
+
+      return new Neuron(neuronId);
+    }
+  }
+
 }

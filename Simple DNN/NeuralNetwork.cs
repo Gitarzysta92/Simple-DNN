@@ -13,10 +13,12 @@ namespace Simple_DNN
     static void Main(string[] args)
     {
       var rand = new Random();
-      var sygmoidNeuronFactory = new NeuronFactory(rand);
-      var sygmoidNeuronService = new NeuronService(sygmoidNeuronFactory);
+      var sygmoidNeuronFactory = new SygmoidNeuronFactory(rand);
+      var sygmoidNeuronService = new SygmoidNeuronService(sygmoidNeuronFactory);
 
-      var networkService = new NetworkService(sygmoidNeuronService);
+      var layerFactory = new LayerFactory(sygmoidNeuronFactory);
+      var networkFactory = new NetworkFactory(layerFactory);
+      var networkService = new NetworkService(networkFactory);
 
       var layers = new[] {10, 10, 10};
 

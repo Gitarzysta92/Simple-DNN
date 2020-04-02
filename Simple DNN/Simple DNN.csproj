@@ -64,10 +64,8 @@
     <Compile Include="Network\Neuron.cs" />
     <Compile Include="NeuralNetwork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Neuron\SygmoidNeuron\ISygmoidNeuron.cs" />
-    <Compile Include="Neuron\SygmoidNeuron\SygmoidNeuron.cs" />
-    <Compile Include="Neuron\NeuronFactory.cs" />
-    <Compile Include="Neuron\NeuronService.cs" />
+    <Compile Include="SygmoidNeuron\SygmoidNeuron.cs" />
+    <Compile Include="SygmoidNeuron\SygmoidNeuronService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

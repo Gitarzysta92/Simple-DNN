@@ -6,15 +6,56 @@ using System.Threading.Tasks;
 
 
 namespace Simple_DNN.Network
-{
+{ 
+
+  public interface INetworkFactory
+  {
+    INetwork Create();
+  }
+
+  public class NetworkFactory : INetworkFactory
+  {
+
+    private ILayerFactory layerFactory;
+
+    public NetworkFactory(ILayerFactory layerFactory)
+    {
+      this.layerFactory = layerFactory;
+    }
+
+    public INetwork Create()
+    {
+      return new Network(this.layerFactory);
+    }
+  }
+
+
+
+
 
   public interface INetwork
   {
 
+
+    int InputLayerLength { get; }
+    int OutputLayerLength { get; }
+    int LayersNumber { get; }
+
+
+    void Initialize(int[] layersConfig);
+
+    void Inputs(Action<INeuron, int> iterator);
+
+    T[] Outputs<T>(Func<INeuron, T> iterator);
+
+    void ForEach(Action<INeuron, ILayer[], int, int> iterator);
+
+    void ForEach(Action<INeuron> iterator);
+
   }
 
 
-  public class Network
+  public class Network : INetwork
   { 
     public int InputLayerLength { get; }
     public int OutputLayerLength { get; }
@@ -31,12 +72,12 @@ namespace Simple_DNN.Network
     private int layersNumber;
 
 
-    private ILayer layer;
+    private ILayerFactory layerFactory;
 
 
-    public Network(ILayer layer)
+    public Network(ILayerFactory layerFactory)
     {
-      this.layer = layer;
+      this.layerFactory = layerFactory;
 
     }
 
@@ -51,13 +92,13 @@ namespace Simple_DNN.Network
 
       for (int layer = 0; layer < this.network.Length; layer++)
       {
-        this.network[layer] = new this.layer(layersConfig[layer]);
+        this.network[layer] = this.layerFactory.Create(layersConfig[layer], layer);
       }
     }
 
 
     // iterate over all inputs elements
-    public void Inputs(Action<Neuron, int> iterator)
+    public void Inputs(Action<INeuron, int> iterator)
     {
       ForEach((neuron, network, layerIndex, rowIndex) =>
       {
@@ -69,7 +110,7 @@ namespace Simple_DNN.Network
     }
 
     // iterate over all outputs elements
-    public T[] Outputs<T>(Func<Neuron, T> iterator)
+    public T[] Outputs<T>(Func<INeuron, T> iterator)
     {
       T[] outputs = new T[this.outputLayerLength];
 
@@ -85,7 +126,7 @@ namespace Simple_DNN.Network
     }
 
     // iterate over all neurons in the network
-    public void ForEach(Action<Neuron, List<Neuron>[], int, int> iterator)
+    public void ForEach(Action<INeuron, ILayer[], int, int> iterator)
     {
       for (int layer = 0; layer < this.network.Length; layer++)
       {
@@ -94,7 +135,7 @@ namespace Simple_DNN.Network
       }
     }
 
-    public void ForEach(Action<Neuron> iterator)
+    public void ForEach(Action<INeuron> iterator)
     {
       for (int layer = 0; layer < this.network.Length; layer++)
         this.network[layer].ForEach(neuron => iterator(neuron));

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Simple_DNN.Network;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace Simple_DNN.Neuron
 {
-  interface INeuronService
+  interface ISygmoidNeuronService
   {
     INeuron InitializeNeuron(string id);
   }
 
-  class NeuronService : INeuronService
+  class SygmoidNeuronService : ISygmoidNeuronService
   {
 
     private readonly INeuronFactory neuronFactory;
 
-    public NeuronService(
+    public SygmoidNeuronService(
       INeuronFactory neuronsFactory
     ) {
       this.neuronFactory = neuronsFactory;

@@ -8,8 +8,8 @@ namespace Simple_DNN.Network
 { 
   public interface ILayer
   {
+    void ForEach(Action<INeuron> iterator);
 
-  
   }
 
 
@@ -31,16 +31,24 @@ namespace Simple_DNN.Network
         this.neurons[i] = getNeuron(i);
       }
     }
+
+    public void ForEach(Action<INeuron> iterator)
+    {
+      for (int i = 0; i < this.neurons.Length; i++)
+      {
+        iterator(this.neurons[i]);
+      }
+    }
   }
 
 
   public interface ILayerFactory
   {
-    ILayer Create(int numberOfNeurons);
+    ILayer Create(int numberOfNeurons, int neuronId);
   }
 
 
-  public class LayerFactory
+  public class LayerFactory : ILayerFactory
   {
 
     private INeuronFactory neuronFactory;

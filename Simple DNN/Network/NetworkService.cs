@@ -12,34 +12,33 @@ namespace Simple_DNN.Network
 
   class NetworkService
   {
+    private INetwork network;
 
-    private Network<INeuron> network;
-
-    private readonly INeuronService neuronService;
+    private readonly INetworkFactory networkFactory;
 
     public NetworkService(
-      INeuronService neuronsService
+      INetworkFactory networkFactory
     )
     {
-      this.neuronService = neuronsService;
+      this.networkFactory = networkFactory;
     }
 
 
     public void InitializeNetwork(int[] layersConfig)
     {
+      this.network = this.networkFactory.Create();
+      this.network.Initialize(layersConfig);
 
-      this.network = new Network<INeuron>(layersConfig);
+      //network.ForEach((neuron, network, layerIndex, rowIndex) => 
+      //{
+      //  string id = $"{layerIndex}{rowIndex}";
+      //  neuron = this.neuronService.InitializeNeuron(id);
 
-      this.network.ForEach((neuron, network, layerIndex, rowIndex) => 
-      {
-        string id = $"{layerIndex}{rowIndex}";
-        neuron = this.neuronService.InitializeNeuron(id);
+      //  var prevLayer = network[layerIndex - 1];
+      //  if (prevLayer != null)
+      //    neuron.Inputs = prevLayer.Select(n => n.Output).ToArray();
 
-        var prevLayer = network[layerIndex - 1];
-        if (prevLayer != null)
-          neuron.Inputs = prevLayer.Select(n => n.Output).ToArray();
-
-      });
+      //});
     }
 
 
