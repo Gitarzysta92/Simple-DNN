@@ -9,7 +9,7 @@ namespace Simple_DNN.Neuron
 {
   interface ISygmoidNeuronService
   {
-    INeuron InitializeNeuron(string id);
+ 
   }
 
   class SygmoidNeuronService : ISygmoidNeuronService
@@ -24,10 +24,6 @@ namespace Simple_DNN.Neuron
     }
    
 
-    public INeuron InitializeNeuron(string id)
-    {
-      return this.neuronFactory.Create(id);
-    }
 
 
   }

@@ -14,8 +14,6 @@ namespace Simple_DNN
     {
       var rand = new Random();
       var sygmoidNeuronFactory = new SygmoidNeuronFactory(rand);
-      var sygmoidNeuronService = new SygmoidNeuronService(sygmoidNeuronFactory);
-
       var layerFactory = new LayerFactory(sygmoidNeuronFactory);
       var networkFactory = new NetworkFactory(layerFactory);
       var networkService = new NetworkService(networkFactory);

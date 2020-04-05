@@ -8,13 +8,11 @@ using System.Threading.Tasks;
 namespace Simple_DNN.Neuron
 {
 
-  interface ISygmoidNeuronFactory : INeuronFactory
-  {
-    INeuron Create(string id);
-    INeuron Create(string id, float weight, int baias);
-  }
+  #region Sygmoid neuron factory interface
+  interface ISygmoidNeuronFactory : INeuronFactory { }
+  #endregion
 
-
+  #region Sygmoid neuron factory class
   class SygmoidNeuronFactory : ISygmoidNeuronFactory
   {
 
@@ -27,10 +25,12 @@ namespace Simple_DNN.Neuron
 
 
 
-    public INeuron Create(string id)
+    public INeuron Create(int layerId, int neuronId)
     {
       float weight = (float)this.randomNumber.NextDouble();
       int baias = this.randomNumber.Next(10);
+
+      string id = $"{layerId}{neuronId}";
 
       return new SygmoidNeuron(id, weight, baias);
     }
@@ -39,22 +39,14 @@ namespace Simple_DNN.Neuron
     {
       return new SygmoidNeuron(id, weight, baias);
     }
-
-
   }
+  #endregion
 
+  #region Sygmoid neuron interface
+  interface ISygmoidNeuron : INeuron { };
+  #endregion
 
-
-  interface ISygmoidNeuron : INeuron
-  {
-
-
-  }
-
-
-
-
-
+  #region Sygmoid neuron class
   // The name comes from math sygmoid function that provides smooth activation point for neuron.
   // It is very similar to Rosneblatt perceptron but instead of giving boolean output
   // it returns any value between 0 and 1.
@@ -95,4 +87,6 @@ namespace Simple_DNN.Neuron
 
   // neuronValue = Sigmoid function( weight * someValue + baias)
   // baias = -threshold
+  #endregion
+
 }

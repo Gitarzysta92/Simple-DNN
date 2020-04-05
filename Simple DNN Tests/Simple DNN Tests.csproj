@@ -62,7 +62,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NeuralNetwork\NetworkTests.cs" />
+    <Compile Include="NetworkTests\LayerFactoryTest.cs" />
+    <Compile Include="NetworkTests\LayerTests.cs" />
+    <Compile Include="NetworkTests\NetworkFactoryTest.cs" />
+    <Compile Include="NetworkTests\NetworkTests.cs" />
+    <Compile Include="NetworkTests\NeuronFactoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

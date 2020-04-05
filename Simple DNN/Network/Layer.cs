@@ -5,17 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Simple_DNN.Network
-{ 
+{
+
+  #region Neural network layer interface
+
   public interface ILayer
   {
-    void ForEach(Action<INeuron> iterator);
+    void ForEach(Action<INeuron, int> iterator);
 
   }
 
+  #endregion
+
+  #region Neural network layer class
 
   public class Layer : ILayer
   {
-    private int layerid;
+    private int layerId;
 
     private INeuron[] neurons;
 
@@ -23,30 +29,34 @@ namespace Simple_DNN.Network
     public Layer(Func<int,INeuron> getNeuron, int numberOfNeurons, int layerId) 
     {
 
-      this.layerid = layerId;
+      this.layerId = layerId;
       this.neurons = new INeuron[numberOfNeurons];
 
-      for (int i = 0; i < this.neurons.Length; i++)
-      {
-        this.neurons[i] = getNeuron(i);
-      }
+      ForEach((neuron, index) => neuron = getNeuron(index));
+
     }
 
-    public void ForEach(Action<INeuron> iterator)
+    public void ForEach(Action<INeuron, int> iterator)
     {
       for (int i = 0; i < this.neurons.Length; i++)
       {
-        iterator(this.neurons[i]);
+        iterator(this.neurons[i], i);
       }
     }
   }
 
+  #endregion
+
+  #region Neural network layer factory interface
 
   public interface ILayerFactory
   {
-    ILayer Create(int numberOfNeurons, int neuronId);
+    ILayer Create(int numberOfNeurons, int layerId);
   }
 
+  #endregion
+
+  #region Neural network layer class
 
   public class LayerFactory : ILayerFactory
   {
@@ -61,11 +71,15 @@ namespace Simple_DNN.Network
     public ILayer Create(int numberOfNeurons, int layerId)
     {
       return new Layer(
-        (int neuronId) => this.neuronFactory.Create(layerId, neuronId), 
-        numberOfNeurons, 
+        (int neuronId) => this.neuronFactory.Create(layerId, neuronId),
+        numberOfNeurons,
         layerId
       );
     }
-      
+
   }
+
+  #endregion
+
+
 }

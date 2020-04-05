@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 
 
 namespace Simple_DNN.Network
-{ 
+{
 
+  #region Network factory interface
   public interface INetworkFactory
   {
     INetwork Create();
   }
+  #endregion
 
+  #region Network factory
   public class NetworkFactory : INetworkFactory
   {
 
@@ -28,15 +31,11 @@ namespace Simple_DNN.Network
       return new Network(this.layerFactory);
     }
   }
+  #endregion
 
-
-
-
-
+  #region Network interface
   public interface INetwork
   {
-
-
     int InputLayerLength { get; }
     int OutputLayerLength { get; }
     int LayersNumber { get; }
@@ -51,16 +50,16 @@ namespace Simple_DNN.Network
     void ForEach(Action<INeuron, ILayer[], int, int> iterator);
 
     void ForEach(Action<INeuron> iterator);
-
   }
+  #endregion
 
-
+  #region Network class
   public class Network : INetwork
-  { 
-    public int InputLayerLength { get; }
-    public int OutputLayerLength { get; }
-    public int LayersNumber { get; }
-  
+  {
+    public int InputLayerLength => this.inputLayerLength;
+    public int OutputLayerLength => this.outputLayerLength;
+    public int LayersNumber => this.layersNumber;
+
 
     // Neurons containers created from jagged array
     private ILayer[] network;
@@ -68,7 +67,7 @@ namespace Simple_DNN.Network
     private int inputLayerLength;
 
     private int outputLayerLength;
-    
+
     private int layersNumber;
 
 
@@ -83,6 +82,8 @@ namespace Simple_DNN.Network
 
     public void Initialize(int[] layersConfig)
     {
+      if (layersConfig.Length == 0) return;
+
       this.inputLayerLength = layersConfig[0];
       this.outputLayerLength = layersConfig[layersConfig.Length - 1];
       this.layersNumber = layersConfig.Length;
@@ -131,17 +132,17 @@ namespace Simple_DNN.Network
       for (int layer = 0; layer < this.network.Length; layer++)
       {
         int row = 0;
-        this.network[layer].ForEach(neuron => iterator(neuron, this.network, layer, row++));
+        this.network[layer].ForEach((neuron, index) => iterator(neuron, this.network, layer, row++));
       }
     }
 
     public void ForEach(Action<INeuron> iterator)
     {
       for (int layer = 0; layer < this.network.Length; layer++)
-        this.network[layer].ForEach(neuron => iterator(neuron));
+        this.network[layer].ForEach((neuron, index) => iterator(neuron));
     }
 
   }
-
+  #endregion
 
 }
